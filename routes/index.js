@@ -3,6 +3,6 @@ const router = express.Router();
 const controllers = require('../controllers');
 
 // login endpoint /api/auth/login
-router.use('/auth/login', controllers.auth.googleOAuth2);
+router.use('/auth/login', controllers.auth.google);
 
 module.exports = router;
