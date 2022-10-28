@@ -1,4 +1,3 @@
-require('dotenv').config()
 const axios = require('axios')
 const querystring = require('query-string')
 const {
@@ -41,7 +40,7 @@ module.exports = {
             url: "https://graph.facebook.com/me",
             method: 'get',
             params: { 
-                fields: ['first_name'],
+                fields: ['id', 'email', 'first_name', 'last_name'].join(','),
                 access_token: accessToken,
             }
         });
