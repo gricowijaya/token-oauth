@@ -22,8 +22,7 @@ module.exports = {
             }
 
             // we can get the token
-            const creds = await googleOauth2.setCredentials(code);
-            console.log(creds)
+            await googleOauth2.setCredentials(code);
 
             // after the code above we can get the data user;
             const { data } = await googleOauth2.getUserData();
@@ -39,8 +38,6 @@ module.exports = {
     facebook: async (req, res, next) => { 
         try { 
             const code =  req.query.code;  
-            console.log("facebookmethod ");
-            console.log(code);
 
             // if there's no code from the google than it'll generate an url and redirect to that url
             if (!code) { 
@@ -56,14 +53,16 @@ module.exports = {
             const userInfo = await facebookOauth2.getUserInfo(access_token);
 
             // so we can access the user
-            const userExists = await User.findOne( {where: { email: userInfo.email } });
+            const userExists = await User.findOne({ where: { email: userInfo.email } });
+            console.log("AAAAAAAAAAAAAAAAAAa")
+            console.log(userExists)
             
             // if the user does not exists than we can create the creds into the database
             if (!userExists) { 
                 userExists = await User.create({
                     name: [userInfo.firstName, userInfo.lastName].join(','),
                     email: userInfo.email,
-                    userType: userType.facebook
+                    user_type: userType.facebook
                 })
             }
 
