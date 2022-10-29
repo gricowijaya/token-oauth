@@ -19,9 +19,10 @@ module.exports = {
         return `https://www.facebook.com/v15.0/dialog/oauth?${params}`;
     },
 
+    // getting the access token from user
     getAccessToken: async(code) => { 
         const { data } = await axios({
-            url: `https://graph.facebook.com/v15.0/oauth/access_token`,
+            url: `https://graph.facebook.com/v15.0/oauth/access_token`, // get the access token
             method: 'get',
             params: { 
                 client_id: FACEBOOK_APP_ID,
@@ -32,16 +33,19 @@ module.exports = {
             
         });
 
+        // return the access_token from facebook
         return data.access_token
     },
 
+    // TODO on getting the username from facebook    
     getUserInfo: async(accessToken) => { 
+        // get the data and return the access token  
         const { data } = await axios({
-            url: "https://graph.facebook.com/me",
-            method: 'get',
+            url: "https://graph.facebook.com/me", // ref :  https://developers.facebook.com/docs/graph-api/overview there's a section called #/me
+            method: 'get', // according to the documentation  we shoudl use the get method
             params: { 
-                fields: ['id', 'email', 'first_name', 'last_name'].join(','),
-                access_token: accessToken,
+                fields: ['id', 'email', 'first_name', 'last_name'].join(','), // the fields we want
+                access_token: accessToken, // return the access_token
             }
         });
 
