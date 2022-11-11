@@ -7,14 +7,14 @@ const {
 } = process.env
 module.exports = { 
     generateAuthURL: () => { 
-        const params = querystring.stringify({
-            client_id: FACEBOOK_APP_ID,
-            redirect_uri: FACEBOOK_REDIRECT_URI,
-            scope:['email', 'user_friends'].join(','),
-            respose_type: 'code',
-            auth_type: 'rerequest',
-            display:'popup'
-        });
+            const params = querystring.stringify({
+                client_id: FACEBOOK_APP_ID,
+                redirect_uri: FACEBOOK_REDIRECT_URI,
+                scope:['email', 'user_friends'].join(','),
+                respose_type: 'code',
+                auth_type: 'rerequest',
+                display:'popup'
+            });
 
         return `https://www.facebook.com/v15.0/dialog/oauth?${params}`;
     },
@@ -37,14 +37,14 @@ module.exports = {
         return data.access_token
     },
 
-    // TODO on getting the username from facebook    
+    // get the user info from the graph API.
     getUserInfo: async(accessToken) => { 
         // get the data and return the access token  
         const { data } = await axios({
             url: "https://graph.facebook.com/me", // ref :  https://developers.facebook.com/docs/graph-api/overview there's a section called #/me
             method: 'get', // according to the documentation  we shoudl use the get method
             params: { 
-                fields: ['id', 'email', 'first_name', 'last_name'].join(','), // the fields we want
+                fields: ['id', 'email', 'first_name', 'last_name', 'user_photos', 'user_friends'].join(','), // the fields we want
                 access_token: accessToken, // return the access_token
             }
         });
